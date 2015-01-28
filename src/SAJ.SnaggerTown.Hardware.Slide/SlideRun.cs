@@ -34,7 +34,7 @@ namespace SAJ.SnaggerTown.Hardware.Slide
         /// </returns>
         public string ToPostRequestContent()
         {
-            return "{ \"SnaggerId\": \"" + SnaggerId + "\", \"OccurredOn\": \"" + OccurredOn + "\", \"TimeInMs\": \"" + TimeInMs + "\" }";
+            return "{ \"keyfobNum\": \"" + SnaggerId.ToString() + "\", \"startTimeStamp\": \"" + OccurredOn + "\", \"endTimeStamp\": \"" + OccurredOn.Add(TimeSpan.FromMilliseconds(TimeInMs)) + "\" }";
         }
     }
 }
