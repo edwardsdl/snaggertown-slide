@@ -43,29 +43,9 @@
     <Compile Include="Snagger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="AngrySquirrel.Netduino.HidDecoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.HidDecoder.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.HidDecoder.dll</HintPath>
-    </Reference>
-    <Reference Include="AngrySquirrel.Netduino.NtpClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.NtpClient.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.NtpClient.dll</HintPath>
-    </Reference>
-    <Reference Include="AngrySquirrel.Netduino.ProximitySensor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.ProximitySensor.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.ProximitySensor.dll</HintPath>
-    </Reference>
     <Reference Include="AngrySquirrel.Netduino.RestClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.RestClient.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.RestClient.dll</HintPath>
-    </Reference>
-    <Reference Include="AngrySquirrel.Netduino.SerialLcd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.SerialLcd.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.SerialLcd.dll</HintPath>
-    </Reference>
-    <Reference Include="AngrySquirrel.Netduino.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AngrySquirrel.Netduino.Utilities.1.0.0.0\lib\netmf42\AngrySquirrel.Netduino.Utilities.dll</HintPath>
+      <HintPath>..\..\..\netduino-rest-client\src\AngrySquirrel.Netduino.RestClient\bin\Debug\AngrySquirrel.Netduino.RestClient.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
@@ -76,7 +56,26 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\..\netduino-hid-decoder\src\AngrySquirrel.Netduino.HidDecoder\AngrySquirrel.Netduino.HidDecoder.csproj">
+      <Project>{55B9BC1F-FBBA-4B66-9690-E3D06D276D35}</Project>
+      <Name>AngrySquirrel.Netduino.HidDecoder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\netduino-ntp-client\src\AngrySquirrel.Netduino.NtpClient\AngrySquirrel.Netduino.NtpClient.csproj">
+      <Project>{AC575962-8AFA-4A27-80B6-17641C39A116}</Project>
+      <Name>AngrySquirrel.Netduino.NtpClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\netduino-proximity-sensor\src\AngrySquirrel.Netduino.ProximitySensor\AngrySquirrel.Netduino.ProximitySensor.csproj">
+      <Project>{264B558E-5853-4515-B62C-D86DCF157086}</Project>
+      <Name>AngrySquirrel.Netduino.ProximitySensor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\netduino-serial-lcd\src\AngrySquirrel.Netduino.SerialLcd\AngrySquirrel.Netduino.SerialLcd.csproj">
+      <Project>{DEF088ED-F35F-4E88-8C7C-402F496305BB}</Project>
+      <Name>AngrySquirrel.Netduino.SerialLcd</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\netduino-utilities\src\AngrySquirrel.Netduino.Utilities\AngrySquirrel.Netduino.Utilities.csproj">
+      <Project>{ACD63211-AE5E-4D66-9691-F2F94FECE786}</Project>
+      <Name>AngrySquirrel.Netduino.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>

@@ -6,6 +6,7 @@ using AngrySquirrel.Netduino.NtpClient;
 using AngrySquirrel.Netduino.ProximitySensor;
 using AngrySquirrel.Netduino.RestClient;
 using AngrySquirrel.Netduino.SerialLcd;
+using AngrySquirrel.Netduino.Utilities;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 
@@ -121,7 +122,7 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 
 			var lowerProximitySensorInput = new AnalogInput(Cpu.AnalogChannel.ANALOG_1);
 
-			LowerProximitySensor = new ProximitySensor(lowerProximitySensorInput)
+			LowerProximitySensor = new ProximitySensor(ProximitySensorType.GP2Y0A21YK, lowerProximitySensorInput)
 				{
 					IsEnabled = true, 
 					ObjectDetectionTrigger =
@@ -147,7 +148,7 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 
 			var upperProximitySensorInput = new AnalogInput(Cpu.AnalogChannel.ANALOG_0);
 
-			UpperProximitySensor = new ProximitySensor(upperProximitySensorInput)
+			UpperProximitySensor = new ProximitySensor(ProximitySensorType.GP2Y0A21YK, upperProximitySensorInput)
 				{
 					IsEnabled = true, 
 					ObjectDetectionTrigger =
@@ -161,25 +162,25 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 		/// <param name="cardDecodedEventArgs">The event arguments containing decoded card data information</param>
 		private static void OnCardDecoded(object sender, CardDecodedEventArgs cardDecodedEventArgs)
 		{
-			var restClient = new RestClient("stnapi", 8360)
-				{
-					AcceptHeader = "text/plain"
-				};
+            //var restClient = new RestClient("stnapi", 8360)
+            //    {
+            //        AcceptHeader = "text/plain"
+            //    };
 
-			var response = restClient.Get("/snaggers");
-			var responseBody = response.Substring(response.IndexOf("\r\n\r\n"))
-				.Trim()
-				.Split(';');
+            //var response = restClient.Get("/snaggers");
+            //var responseBody = response.Substring(response.IndexOf("\r\n\r\n"))
+            //    .Trim()
+            //    .Split(';');
 
-			for (var i = 1; i < responseBody.Length; i++)
-			{
-				var snagger = new Snagger(responseBody[i]);
-				if (snagger.Rfid == cardDecodedEventArgs.CardData.CardNumber)
-				{
-					SlideRun.SnaggerId = snagger.SnaggerId;
-					DisplayMessage("Hello", snagger.Name);
-				}
-			}
+            //for (var i = 1; i < responseBody.Length; i++)
+            //{
+            //    var snagger = new Snagger(responseBody[i]);
+            //    if (snagger.Rfid == cardDecodedEventArgs.CardData.CardNumber)
+            //    {
+            //        SlideRun.SnaggerId = snagger.SnaggerId;
+            //        DisplayMessage("Hello", snagger.Name);
+            //    }
+            //}
 		}
 
 		/// <summary>Handles the <see cref="ProximitySensor.ObjectDetected"/> event</summary>
@@ -200,12 +201,12 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 				SlideRun.TimeInMs = objectDetectedEventArgs.DateTime.Subtract(SlideRun.OccurredOn)
 					.Milliseconds;
 
-				var restClient = new RestClient("stnapi", 8370)
-					{
-						AcceptHeader = "text/plain", 
-						ContentTypeHeader = "application/json"
-					};
-				restClient.Post("/slideruns", SlideRun.ToPostRequestContent());
+                //var restClient = new RestClient("stnapi", 8370)
+                //    {
+                //        AcceptHeader = "text/plain", 
+                //        ContentTypeHeader = "application/json"
+                //    };
+                //restClient.Post("/slideruns", SlideRun.ToPostRequestContent());
 
 				SlideRun = new SlideRun();
 
