@@ -15,6 +15,10 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 	public class Program
 	{
 		#region Properties
+        
+        private const readonly string Api = "devsnaggertown";
+        
+        private const readonly int ApiPort = 8081;
 
 		/// <summary>Gets or sets the lower proximity sensor</summary>
 		private static ProximitySensor LowerProximitySensor { get; set; }
@@ -161,26 +165,9 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 		/// <param name="cardDecodedEventArgs">The event arguments containing decoded card data information</param>
 		private static void OnCardDecoded(object sender, CardDecodedEventArgs cardDecodedEventArgs)
 		{
-			var restClient = new RestClient("stnapi", 8360)
-				{
-					AcceptHeader = "text/plain"
-				};
-
-			var response = restClient.Get("/snaggers");
-			var responseBody = response.Substring(response.IndexOf("\r\n\r\n"))
-				.Trim()
-				.Split(';');
-
-			for (var i = 1; i < responseBody.Length; i++)
-			{
-				var snagger = new Snagger(responseBody[i]);
-				if (snagger.Rfid == cardDecodedEventArgs.CardData.CardNumber)
-				{
-					SlideRun.SnaggerId = snagger.SnaggerId;
-					DisplayMessage("Hello", snagger.Name);
-				}
-			}
-		}
+            SlideRun.SnaggerId = cardDecodedEventArgs.CardData.CardNumber;
+			DisplayMessage("Ready to Slide!");
+        }
 
 		/// <summary>Handles the <see cref="ProximitySensor.ObjectDetected"/> event</summary>
 		/// <param name="sender">The sender of the <see cref="ProximitySensor.ObjectDetected"/> event</param>
@@ -200,7 +187,7 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 				SlideRun.TimeInMs = objectDetectedEventArgs.DateTime.Subtract(SlideRun.OccurredOn)
 					.Milliseconds;
 
-				var restClient = new RestClient("stnapi", 8370)
+				var restClient = new RestClient(Api, ApiPort)
 					{
 						AcceptHeader = "text/plain", 
 						ContentTypeHeader = "application/json"
