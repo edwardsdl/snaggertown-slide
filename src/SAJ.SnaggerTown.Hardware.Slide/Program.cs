@@ -16,6 +16,10 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 	public class Program
 	{
 		#region Properties
+        
+        private const readonly string Api = "devsnaggertown";
+        
+        private const readonly int ApiPort = 8081;
 
 		/// <summary>Gets or sets the lower proximity sensor</summary>
 		private static ProximitySensor LowerProximitySensor { get; set; }
@@ -162,6 +166,8 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 		/// <param name="cardDecodedEventArgs">The event arguments containing decoded card data information</param>
 		private static void OnCardDecoded(object sender, CardDecodedEventArgs cardDecodedEventArgs)
 		{
+            SlideRun.SnaggerId = cardDecodedEventArgs.CardData.CardNumber;
+			DisplayMessage("Ready to Slide!");
             //var restClient = new RestClient("stnapi", 8360)
             //    {
             //        AcceptHeader = "text/plain"
@@ -201,12 +207,12 @@ namespace SAJ.SnaggerTown.Hardware.Slide
 				SlideRun.TimeInMs = objectDetectedEventArgs.DateTime.Subtract(SlideRun.OccurredOn)
 					.Milliseconds;
 
-                //var restClient = new RestClient("stnapi", 8370)
-                //    {
-                //        AcceptHeader = "text/plain", 
-                //        ContentTypeHeader = "application/json"
-                //    };
-                //restClient.Post("/slideruns", SlideRun.ToPostRequestContent());
+				var restClient = new RestClient(Api, ApiPort)
+					{
+						AcceptHeader = "text/plain", 
+						ContentTypeHeader = "application/json"
+					};
+				restClient.Post("/slide-runs", SlideRun.ToPostRequestContent());
 
 				SlideRun = new SlideRun();
 
